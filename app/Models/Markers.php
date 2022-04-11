@@ -10,6 +10,16 @@ class Markers extends Model
     use HasFactory;
 
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title', 'status', 'availability'
+    ];
+
+
     //relationships
 
     public function address()
