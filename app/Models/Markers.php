@@ -34,6 +34,11 @@ class Markers extends Model
 
     public function user()
     {
+        return $this->belongsTo(User::class);
+    }
+
+    public function recyclableMaterial()
+    {
         return $this->hasOne(User::class);
     }
 }

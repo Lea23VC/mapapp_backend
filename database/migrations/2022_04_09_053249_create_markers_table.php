@@ -23,6 +23,8 @@ class CreateMarkersTable extends Migration
             $table->integer("points");
             $table->float("latitude");
             $table->float("longitude");
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
