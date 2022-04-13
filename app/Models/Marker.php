@@ -39,6 +39,11 @@ class Marker extends Model
 
     public function recyclableMaterial()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(Recyclable_Material::class);
+    }
+
+    public function comment()
+    {
+        return $this->hasOne(Comment::class);
     }
 }

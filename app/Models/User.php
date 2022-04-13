@@ -46,4 +46,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Marker::class);
     }
+    public function permission()
+    {
+        return $this->hasMany(Permission::class);
+    }
 }
