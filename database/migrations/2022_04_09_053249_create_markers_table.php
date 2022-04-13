@@ -16,14 +16,14 @@ class CreateMarkersTable extends Migration
         Schema::create('markers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("title");
-            $table->string("imgURL");
-            $table->string("status");
-            $table->boolean("availability");
-            $table->integer("points");
-            $table->float("latitude");
-            $table->float("longitude");
-            $table->unsignedBigInteger('user_id');
+            $table->string("title")->nullable();
+            $table->string("imgURL")->nullable();
+            $table->string("status")->nullable();
+            $table->boolean("availability")->nullable();
+            $table->integer("points")->nullable();
+            $table->float("latitude")->nullable();
+            $table->float("longitude")->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

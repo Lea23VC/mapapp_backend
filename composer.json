@@ -12,7 +12,9 @@
         "laravel/framework": "^8.75",
         "laravel/passport": "^10.4",
         "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5"
+        "laravel/telescope": "^4.8",
+        "laravel/tinker": "^2.5",
+        "toin0u/geocoder-laravel": "^4.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -60,5 +62,11 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "post-update-cmd": [
+        "@php artisan cache:clear"
+    ],
+    "post-install-cmd": [
+        "@php artisan cache:clear"
+    ] 
 }

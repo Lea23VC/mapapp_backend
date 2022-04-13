@@ -35,8 +35,8 @@ class MarkerController extends BaseController
         $input = $request->all();
 
         $validator = Validator::make($input, [
-            'name' => 'required',
-            'detail' => 'required'
+            'title' => 'required',
+
         ]);
 
         if ($validator->fails()) {
@@ -77,16 +77,16 @@ class MarkerController extends BaseController
         $input = $request->all();
 
         $validator = Validator::make($input, [
-            'name' => 'required',
-            'detail' => 'required'
+            'title' => 'required',
+
         ]);
 
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $marker->name = $input['name'];
-        $marker->detail = $input['detail'];
+        $marker->title = $input['name'];
+        // $marker->detail = $input['detail'];
         $marker->save();
 
         return $this->sendResponse(new MarkerResource($marker), 'Marker updated successfully.');
