@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 
+use App\Jobs\UploadImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Kreait\Firebase\Auth as FirebaseAuth;
@@ -12,6 +13,7 @@ use Kreait\Firebase\Exception\FirebaseException;
 use Google\Cloud\Firestore\FirestoreClient;
 use Session;
 use Illuminate\Support\Str;
+use Image;
 
 class ImageController extends BaseController
 {
@@ -58,22 +60,33 @@ class ImageController extends BaseController
             'image' => 'required',
         ]);
         $input = $request->all();
-        $image = $request->file('image'); //image file from frontend
+        // $image = $request->file('image'); //image file from frontend
 
-        $student   = app('firebase.firestore')->database()->collection('Images')->document(Str::uuid());
-        $firebase_storage_path = 'Images/';
-        $name     = $student->id();
-        $localfolder = public_path('firebase-temp-uploads') . '/';
-        $extension = $image->getClientOriginalExtension();
-        $file      = $name . '.' . $extension;
-        if ($image->move($localfolder, $file)) {
-            $uploadedfile = fopen($localfolder . $file, 'r');
-            app('firebase.storage')->getBucket()->upload($uploadedfile, ['name' => $firebase_storage_path . $file]);
-            //will remove from local laravel folder
-            unlink($localfolder . $file);
-            Session::flash('message', 'Succesfully Uploaded');
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
+            $path = 'tmp/' . $filename;
+            Image::make($image->getRealPath())->resize(300, 300)->save($path);
+            $request->replace(['image' => $path]);
         }
-        return $this->sendResponse($name, 'Image uploaded successfully.');
+
+        UploadImage::dispatch($path, $filename);
+        // $image = $request->file('image'); //image file from frontend
+
+        // $student   = app('firebase.firestore')->database()->collection('Images')->document(Str::uuid());
+        // $firebase_storage_path = 'Images/';
+        // $name     = $student->id();
+        // $localfolder = public_path('firebase-temp-uploads') . '/';
+        // $extension = $image->getClientOriginalExtension();
+        // $file      = $name . '.' . $extension;
+        // if ($image->move($localfolder, $file)) {
+        //     $uploadedfile = fopen($localfolder . $file, 'r');
+        //     app('firebase.storage')->getBucket()->upload($uploadedfile, ['name' => $firebase_storage_path . $file]);
+        //     //will remove from local laravel folder
+        //     unlink($localfolder . $file);
+        //     Session::flash('message', 'Succesfully Uploaded');
+        // }
+        return $this->sendResponse($input, 'Image uploaded successfully.');
     }
 
     /**
