@@ -133,7 +133,6 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
-
     'providers' => [
 
         Laravel\Passport\PassportServiceProvider::class,
@@ -181,7 +180,7 @@ return [
 
         Geocoder\Laravel\Providers\GeocoderService::class,
 
-
+        Kreait\Laravel\Firebase\ServiceProvider::class
     ],
 
     /*

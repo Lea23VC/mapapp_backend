@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\MarkerController;
 use App\Http\Controllers\API\RegisterController;
-
+use App\Http\Controllers\API\ImageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,5 +27,6 @@ Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [RegisterController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
-    Route::resource('products', MarkerController::class);
+    Route::resource('markers', MarkerController::class);
+    Route::post('image', [ImageController::class, 'store']);
 });
