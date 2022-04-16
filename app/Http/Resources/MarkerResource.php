@@ -16,8 +16,11 @@ class MarkerResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'detail' => $this->detail,
+            'user_id' => $this->user_id,
+            'title' => $this->title,
+            'status' => $this->status,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
             'created_at' => $this->created_at->format('d/m/Y'),
             'updated_at' => $this->updated_at->format('d/m/Y'),
         ];

@@ -16,9 +16,8 @@ class Marker extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'status', 'availability'
+        'title', 'status', 'availability', 'imgURL', 'points', 'latitude', 'longitude'
     ];
-
 
     //relationships
 

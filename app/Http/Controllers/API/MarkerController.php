@@ -9,6 +9,8 @@ use Validator;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Resources\MarkerResource;
+use Log;
+use App\Models\User;
 
 class MarkerController extends BaseController
 {
@@ -34,6 +36,8 @@ class MarkerController extends BaseController
     {
         $input = $request->all();
 
+        // Log::info($request->json()->all()["data"]);
+
         $validator = Validator::make($input, [
             'title' => 'required',
 
@@ -43,9 +47,14 @@ class MarkerController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $marker = Marker::create($input);
-
-        return $this->sendResponse(new MarkerResource($marker), 'Marker created successfully.');
+        $user = User::find($request->json()->all()["userId"]);
+        if ($user) {
+            $marker = Marker::create($input);
+            $user->marker()->save($marker);
+            return $this->sendResponse(new MarkerResource($marker), 'Marker created successfully.');
+        } else {
+            return $this->sendError('User not found');
+        }
     }
 
     /**

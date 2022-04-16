@@ -59,9 +59,9 @@ class UploadImage implements ShouldQueue
         app('firebase.storage')->getBucket()->upload($uploadedfile, ['name' => $firebase_storage_path . $this->filename]);
         //will remove from local laravel folder
         unlink($this->path);
-        Session::flash('message', 'Succesfully Uploaded');
+        // Session::flash('message', 'Succesfully Uploaded');
         // }
 
-        Log::info("Job dispatched");
+        Log::info("Image uploaded");
     }
 }

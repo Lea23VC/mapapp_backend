@@ -26,10 +26,10 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
             }
 
             return $entry->isReportableException() ||
-                   $entry->isFailedRequest() ||
-                   $entry->isFailedJob() ||
-                   $entry->isScheduledTask() ||
-                   $entry->hasMonitoredTag();
+                $entry->isFailedRequest() ||
+                $entry->isFailedJob() ||
+                $entry->isScheduledTask() ||
+                $entry->hasMonitoredTag();
         });
     }
 
@@ -52,6 +52,19 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
             'x-xsrf-token',
         ]);
     }
+
+    //* Overload authorization method from \Laravel\Horizon\HorizonApplicationServiceProvider
+    //* to allow access to Horizon without having a logged in user.
+    //*
+    // * @return void
+    // */
+    protected function authorization()
+    {
+        Telescope::auth(function ($request) {
+            return true;
+        });
+    }
+
 
     /**
      * Register the Telescope gate.
