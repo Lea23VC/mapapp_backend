@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MarkerResource extends JsonResource
+class CommentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,15 +17,14 @@ class MarkerResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'title' => $this->title,
-            'status' => $this->status,
-            'latitude' => $this->latitude,
-            'longitude' => $this->longitude,
-            "availability" => $this->availability,
-            'address' => $this->address_street . " " . $this->address_number . ", " . $this->commune . ", " . $this->city . ", " . $this->state . ", " . $this->country,
+            'marker_id' => $this->marker_id,
+            'message' => $this->message,
+            'votes' => $this->votes,
+            // 'longitude' => $this->longitude,
+            // "availability" => $this->availability,
+            // 'address' => $this->address_street . " " . $this->address_number . ", " . $this->commune . ", " . $this->city . ", " . $this->state . ", " . $this->country,
             'created_at' => $this->created_at->format('d/m/Y'),
             'updated_at' => $this->updated_at->format('d/m/Y'),
-            'comments' => $this->comment()->get(),
         ];
     }
 }

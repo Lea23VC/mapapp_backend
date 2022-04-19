@@ -90,16 +90,97 @@ class MarkerController extends BaseController
     {
         $input = $request->all();
 
-        $validator = Validator::make($input, [
-            'title' => 'required',
 
-        ]);
+        //WIP validate all stuff
+        // $validator = Validator::make($input, [
+        //     'title' => 'required',
 
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return $this->sendError('Validation Error.', $validator->errors());
+        // }
+
+        // $marker->title = $input['title'];
+        if ($request->has("title")) {
+            $marker->title = $input["title"];
         }
 
-        $marker->title = $input['name'];
+        if ($request->has("status")) {
+            $marker->status = $input["status"];
+        }
+
+        if ($request->has("latitude")) {
+            $marker->latitude = $input["latitude"];
+        }
+
+        if ($request->has("longitude")) {
+            $marker->longitude = $input["longitude"];
+        }
+
+        if ($request->has("availability")) {
+            $marker->availability = $input["availability"];
+        }
+
+        if ($request->has("points")) {
+            $marker->points = $input["points"];
+        }
+
+        if ($request->has("PE")) {
+            $marker->PE = $input["PE"];
+        }
+
+        if ($request->has("PET")) {
+            $marker->PET = $input["PET"];
+        }
+
+        if ($request->has("PVC")) {
+            $marker->PVC = $input["PVC"];
+        }
+
+        if ($request->has("aluminium")) {
+            $marker->aluminium = $input["aluminium"];
+        }
+
+        if ($request->has("batteries")) {
+            $marker->batteries = $input["batteries"];
+        }
+
+        if ($request->has("cardboard")) {
+            $marker->cardboard = $input["cardboard"];
+        }
+
+        if ($request->has("cellphones")) {
+            $marker->cellphones = $input["cellphones"];
+        }
+
+        if ($request->has("glass")) {
+            $marker->cellphones = $input["glass"];
+        }
+
+        if ($request->has("oil")) {
+            $marker->cellphones = $input["oil"];
+        }
+
+        if ($request->has("otherPapers")) {
+            $marker->otherPapers = $input["otherPapers"];
+        }
+
+        if ($request->has("otherPlastics")) {
+            $marker->otherPlastics = $input["otherPlastics"];
+        }
+
+        if ($request->has("paper")) {
+            $marker->paper = $input["paper"];
+        }
+
+        if ($request->has("tetra")) {
+            $marker->tetra = $input["tetra"];
+        }
+
+
+
+
         // $marker->detail = $input['detail'];
         $marker->save();
 
