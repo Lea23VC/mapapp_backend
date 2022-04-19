@@ -21,6 +21,7 @@ class MarkerResource extends JsonResource
             'status' => $this->status,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
+            'address' => $this->address_street . " " . $this->address_number . ", " . $this->commune . ", " . $this->city . ", " . $this->state . ", " . $this->country,
             'created_at' => $this->created_at->format('d/m/Y'),
             'updated_at' => $this->updated_at->format('d/m/Y'),
         ];

@@ -25,6 +25,27 @@ class CreateMarkersTable extends Migration
             $table->float("longitude")->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->string("address_number")->nullable();
+            $table->string("address_street")->nullable();
+            $table->string("commune")->nullable();
+            $table->string("city")->nullable();
+            $table->string("state")->nullable();
+            $table->string("country")->nullable();
+
+            $table->boolean('PE')->default(0);
+            $table->boolean('PET')->default(0);
+            $table->boolean('PVC')->default(0);
+            $table->boolean("aluminium")->default(0);
+            $table->boolean("batteries")->default(0);
+            $table->boolean("cardboard")->default(0);
+            $table->boolean("cellphones")->default(0);
+            $table->boolean("glass")->default(0);
+            $table->boolean("oil")->default(0);
+            $table->boolean("otherPapers")->default(0);
+            $table->boolean("otherPlastics")->default(0);
+            $table->boolean("paper")->default(0);
+            $table->boolean("tetra")->default(0);
         });
     }
 

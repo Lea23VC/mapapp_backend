@@ -11,6 +11,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Resources\MarkerResource;
 use Log;
 use App\Models\User;
+use App\Jobs\AddAddressFromCoords;
 
 class MarkerController extends BaseController
 {
@@ -20,12 +21,13 @@ class MarkerController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $markers = Marker::all();
 
-        return $this->sendResponse(MarkerResource::collection($markers), 'Markers retrieved successfully.');
+        $items_per_page = $request->input("items_per_page");
+        return Marker::filter($request->all())->paginate($items_per_page);
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -46,11 +48,14 @@ class MarkerController extends BaseController
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
+        // $geocodertest = json_decode(app('geocoder')->reverse(-33.485090, -70.640190)->toJson(), true);
+        // Log::info($geocodertest["properties"]["streetName"]);
 
         $user = User::find($request->json()->all()["userId"]);
         if ($user) {
             $marker = Marker::create($input);
             $user->marker()->save($marker);
+            AddAddressFromCoords::dispatch($marker->id, $marker->latitude, $marker->longitude);
             return $this->sendResponse(new MarkerResource($marker), 'Marker created successfully.');
         } else {
             return $this->sendError('User not found');

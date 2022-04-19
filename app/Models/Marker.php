@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use EloquentFilter\Filterable;
+use App\ModelFilters\MarkerFilter;
 
 class Marker extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable;
 
 
     /**
@@ -16,15 +18,29 @@ class Marker extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'status', 'availability', 'imgURL', 'points', 'latitude', 'longitude'
+        'title', 'status', 'availability', 'imgURL', 'points', 'latitude', 'longitude', 'address_number', 'address_street', 'commune', 'city', 'state', 'country',
+        'PE',
+        'PET',
+        'PVC',
+        "aluminium",
+        "batteries",
+        "cardboard",
+        "cellphones",
+        "glass",
+        "oil",
+        "otherPapers",
+        "otherPlastics",
+        "paper",
+        "tetra"
     ];
+
 
     //relationships
 
-    public function address()
-    {
-        return $this->hasOne(Address::class);
-    }
+    // public function address()
+    // {
+    //     return $this->hasOne(Address::class);
+    // }
 
     // public function recyclableMaterial()
     // {
@@ -44,5 +60,9 @@ class Marker extends Model
     public function comment()
     {
         return $this->hasOne(Comment::class);
+    }
+    public function modelFilter(): ?string
+    {
+        return $this->provideFilter(MarkerFilter::class);
     }
 }

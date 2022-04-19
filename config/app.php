@@ -186,6 +186,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
 
 
+        EloquentFilter\ServiceProvider::class,
+
     ],
 
     /*

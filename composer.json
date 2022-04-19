@@ -8,6 +8,7 @@
         "php": "^7.3|^8.0",
         "firebase/php-jwt": "^6.1",
         "fruitcake/laravel-cors": "^2.0",
+        "geocoder-php/google-maps-provider": "^4.6",
         "google/cloud-firestore": "^1.21",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",
@@ -18,7 +19,8 @@
         "laravel/sanctum": "^2.11",
         "laravel/telescope": "^4.8",
         "laravel/tinker": "^2.5",
-        "toin0u/geocoder-laravel": "^4.4"
+        "toin0u/geocoder-laravel": "^4.4",
+        "tucker-eric/eloquentfilter": "^3.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
