@@ -16,6 +16,7 @@ use Kreait\Firebase\Exception\FirebaseException;
 use Google\Cloud\Firestore\FirestoreClient;
 use Session;
 use Illuminate\Support\Str;
+use App\Models\Marker;
 
 use Log;
 
@@ -35,9 +36,12 @@ class UploadImage implements ShouldQueue
 
     protected $path;
     protected $filename;
-    public function __construct($path, $filename)
+    protected $id;
+
+    public function __construct($path, $filename, $id)
     {
         //
+        $this->id = $id;
         $this->path = $path;
         $this->filename = $filename;
     }
@@ -51,7 +55,7 @@ class UploadImage implements ShouldQueue
     {
         //
 
-        Log::info($this->path);
+        Log::info("Path: " . $this->path);
         // $student   = app('firebase.firestore')->database()->collection('Images')->document(Str::uuid());
         $firebase_storage_path = 'Images/';
 
@@ -62,6 +66,11 @@ class UploadImage implements ShouldQueue
         // Session::flash('message', 'Succesfully Uploaded');
         // }
 
+        $marker = Marker::find($this->id);
+
+        Log::info("ID: " . $this->id);
+        $marker->imgURL = $firebase_storage_path  . $this->filename;
+        $marker->save();
         Log::info("Image uploaded");
     }
 }

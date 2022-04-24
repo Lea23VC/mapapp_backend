@@ -12,6 +12,10 @@ use App\Http\Resources\MarkerResource;
 use Log;
 use App\Models\User;
 use App\Jobs\AddAddressFromCoords;
+use Illuminate\Support\Str;
+use Image;
+use App\Jobs\UploadImage;
+
 
 class MarkerController extends BaseController
 {
@@ -42,6 +46,7 @@ class MarkerController extends BaseController
 
         $validator = Validator::make($input, [
             'title' => 'required',
+            'image' => 'required',
 
         ]);
 
@@ -51,11 +56,22 @@ class MarkerController extends BaseController
         // $geocodertest = json_decode(app('geocoder')->reverse(-33.485090, -70.640190)->toJson(), true);
         // Log::info($geocodertest["properties"]["streetName"]);
 
-        $user = User::find($request->json()->all()["userId"]);
+        $user = User::find($request->all()["userId"]);
         if ($user) {
             $marker = Marker::create($input);
             $user->marker()->save($marker);
             AddAddressFromCoords::dispatch($marker->id, $marker->latitude, $marker->longitude);
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
+                $path = 'tmp/' . $filename;
+                Image::make($image->getRealPath())->save($path);
+                $request->replace(['image' => $path]);
+                Log::info("ID: " . $marker->id);
+                UploadImage::dispatch($path, $filename, $marker->id);
+            }
+
+
             return $this->sendResponse(new MarkerResource($marker), 'Marker created successfully.');
         } else {
             return $this->sendError('User not found');

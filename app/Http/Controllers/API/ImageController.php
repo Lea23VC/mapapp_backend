@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 
-use App\Jobs\UploadImage;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Kreait\Firebase\Auth as FirebaseAuth;
@@ -14,6 +14,7 @@ use Google\Cloud\Firestore\FirestoreClient;
 use Session;
 use Illuminate\Support\Str;
 use Image;
+use App\Jobs\UploadImage;
 
 class ImageController extends BaseController
 {
@@ -70,7 +71,7 @@ class ImageController extends BaseController
             $request->replace(['image' => $path]);
         }
 
-        UploadImage::dispatch($path, $filename);
+        UploadImage::dispatch($path, $filename,);
         // $image = $request->file('image'); //image file from frontend
 
         // $student   = app('firebase.firestore')->database()->collection('Images')->document(Str::uuid());
