@@ -6,14 +6,24 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "firebase/php-jwt": "^6.1",
         "fruitcake/laravel-cors": "^2.0",
+        "geocoder-php/google-maps-provider": "^4.6",
+        "google/cloud-firestore": "^1.21",
         "guzzlehttp/guzzle": "^7.0.1",
+        "intervention/image": "^2.7",
+        "kreait/firebase-php": "^6.2",
+        "kreait/laravel-firebase": "^4.1",
         "laravel/framework": "^8.75",
         "laravel/passport": "^10.4",
         "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5"
+        "laravel/telescope": "^4.8",
+        "laravel/tinker": "^2.5",
+        "toin0u/geocoder-laravel": "^4.4",
+        "tucker-eric/eloquentfilter": "^3.1"
     },
     "require-dev": {
+        "andyabih/laravel-to-uml": "^1.0",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
@@ -59,5 +69,11 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "post-update-cmd": [
+        "@php artisan cache:clear"
+    ],
+    "post-install-cmd": [
+        "@php artisan cache:clear"
+    ] 
 }

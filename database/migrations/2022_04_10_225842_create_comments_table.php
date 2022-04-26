@@ -18,6 +18,10 @@ class CreateCommentsTable extends Migration
             $table->timestamps();
             $table->text("message");
             $table->integer("votes");
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('marker_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('marker_id')->references('id')->on('markers')->onDelete('cascade');
         });
     }
 
