@@ -14,7 +14,7 @@ class AddFirebaseUIDToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('firebaseUID');
+            $table->string('firebaseUID');
         });
     }
 

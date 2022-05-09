@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use Firebase\Auth\Token\Exception\InvalidToken;
+use Log;
 
 class RegisterController extends BaseController
 {
@@ -68,7 +69,8 @@ class RegisterController extends BaseController
         }
 
         // Retrieve the UID (User ID) from the verified Firebase credential's token
-        $uid = $verifiedIdToken->getClaim('sub');
+        $uid = $verifiedIdToken->claims()->get('sub');
+        Log::info($uid);
 
         // Retrieve the user model linked with the Firebase UID
         $user = User::where('firebaseUID', $uid)->first();
