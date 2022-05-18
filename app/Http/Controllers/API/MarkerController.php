@@ -29,7 +29,7 @@ class MarkerController extends BaseController
     {
 
         $items_per_page = $request->input("items_per_page");
-        return Marker::filter($request->all())->paginate($items_per_page);
+        return MarkerResource::collection(Marker::filter($request->all())->paginate($items_per_page));
     }
 
     /**

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use Firebase\Auth\Token\Exception\InvalidToken;
 use Log;
+use Carbon\Carbon;
+
 
 class RegisterController extends BaseController
 {
@@ -22,8 +24,6 @@ class RegisterController extends BaseController
         $validator = Validator::make($request->json()->all(), [
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required',
-            'c_password' => 'required|same:password',
         ]);
 
         if ($validator->fails()) {
@@ -31,7 +31,10 @@ class RegisterController extends BaseController
         }
 
         $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
+        Log::info("Firebase UID: ");
+        Log::info($input["firebaseUID"]);
+        // $input['password'] = bcrypt($input['password']);
+        // $input["birthDate"] = date('d-m-Y', $input["birthDate"]);
         $user = User::create($input);
         $success['token'] =  $user->createToken('MapApp')->accessToken;
         $success['name'] =  $user->name;
