@@ -27,8 +27,31 @@ class MarkerController extends BaseController
      */
     public function index(Request $request)
     {
-
         $items_per_page = $request->input("items_per_page");
+        //Move this to filter someday
+        // if ($request->has("latitude") && $request->has("longitude")) {
+
+        //     $lat = $request->input('latitude');
+        //     $lon = $request->input('longitude');
+        //     $distance = 150;
+        //     $aa =  (
+        //         (
+        //             (acos(
+        //                 sin(($lat * pi() / 180))
+        //                     *
+        //                     sin((`latitude` * pi() / 180)) + cos(($lat * pi() / 180))
+        //                     *
+        //                     cos((`latitude` * pi() / 180)) * cos((($lon - `longitude`) * pi() / 180))
+        //             )
+        //             ) * 180 / pi()
+        //         ) * 60 * 1.1515 * 1.609344
+        //     );
+        //     return DB::table('markers')->selectRaw('(((acos(sin(( -33.483605 * pi() / 180))*sin(( `latitude` * pi() / 180)) + cos(( -33.483605 * pi() /180 ))*cos(( `latitude` * pi() / 180)) * cos((( -70.6354267 - `longitude`) * pi()/180)))) * 180/pi()) * 60 * 1.1515 * 1.609344) as distance')->selectRaw('markers.*')->get();
+        // }
+
+
+
+
         return MarkerResource::collection(Marker::filter($request->all())->paginate($items_per_page));
     }
 
