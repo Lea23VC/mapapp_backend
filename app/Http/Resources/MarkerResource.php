@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use App\Http\Resources\CommentResource;
+
 class MarkerResource extends JsonResource
 {
     /**
@@ -27,6 +29,7 @@ class MarkerResource extends JsonResource
             }
         }
 
+        $distance =  (((acos(sin((-33.483605 * pi() / 180)) * sin(($this->latitude * pi() / 180)) + cos((-33.483605 * pi() / 180)) * cos(($this->latitude * pi() / 180)) * cos(((-70.6354267 - $this->longitude) * pi() / 180)))) * 180 / pi()) * 60 * 1.1515 * 1.609344) * 1000;
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
@@ -34,7 +37,8 @@ class MarkerResource extends JsonResource
             'status' => $this->status,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
-            'distance' => (((acos(sin((-33.483605 * pi() / 180)) * sin(($this->latitude * pi() / 180)) + cos((-33.483605 * pi() / 180)) * cos(($this->latitude * pi() / 180)) * cos(((-70.6354267 - $this->longitude) * pi() / 180)))) * 180 / pi()) * 60 * 1.1515 * 1.609344) * 1000 . ' metros',
+
+            'distance' =>  round($distance, 2) . ' metros',
             "availability" => $this->availability,
             'imgURL' => $image,
             'address' => $this->address_street . " " . $this->address_number . ", " . $this->commune . ", " . $this->city . ", " . $this->state . ", " . $this->country,
@@ -53,7 +57,7 @@ class MarkerResource extends JsonResource
             'otherPlastics' => $this->otherPlastics,
             'paper' => $this->paper,
             'tetra' => $this->tetra,
-            'comments' => $this->comment()->get(),
+            'comments' =>  CommentResource::collection(($this->comment()->get())),
         ];
     }
 }

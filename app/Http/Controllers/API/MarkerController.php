@@ -9,6 +9,8 @@ use Validator;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Resources\MarkerResource;
+use App\Http\Resources\MarkerResourceCoords;
+
 use Log;
 use App\Models\User;
 use App\Jobs\AddAddressFromCoords;
@@ -52,7 +54,7 @@ class MarkerController extends BaseController
 
 
 
-        return MarkerResource::collection(Marker::filter($request->all())->paginate($items_per_page));
+        return MarkerResourceCoords::collection(Marker::filter($request->all())->paginate($items_per_page));
     }
 
     /**

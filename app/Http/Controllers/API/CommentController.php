@@ -26,7 +26,7 @@ class CommentController extends BaseController
     {
 
         $items_per_page = $request->input("items_per_page");
-        return Comment::filter($request->all())->paginate($items_per_page);
+        return CommentResource::collection(Comment::filter($request->all())->paginate($items_per_page));
     }
 
     /**
