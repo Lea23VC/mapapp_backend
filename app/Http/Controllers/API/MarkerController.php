@@ -81,11 +81,13 @@ class MarkerController extends BaseController
         // $geocodertest = json_decode(app('geocoder')->reverse(-33.485090, -70.640190)->toJson(), true);
         // Log::info($geocodertest["properties"]["streetName"]);
 
-        $user = User::find($request->all()["userId"]);
+        $user = User::where('firebaseUID', $input["userId"])->first();;
         if ($user) {
             $marker = Marker::create($input);
             $user->marker()->save($marker);
-            AddAddressFromCoords::dispatch($marker->id, $marker->latitude, $marker->longitude);
+
+            //descomentar cuando Google ya no quiera cortar mi cabeza
+            // AddAddressFromCoords::dispatch($marker->id, $marker->latitude, $marker->longitude);
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
@@ -93,7 +95,7 @@ class MarkerController extends BaseController
                 Image::make($image->getRealPath())->save($path);
                 $request->replace(['image' => $path]);
                 Log::info("ID: " . $marker->id);
-                UploadImage::dispatch($path, $filename, $marker->id);
+                UploadImage::dispatch($path, $filename, $marker->id, $marker);
             }
 
 

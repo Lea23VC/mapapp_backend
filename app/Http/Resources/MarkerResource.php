@@ -5,6 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 use App\Http\Resources\CommentResource;
+use Log;
+use App\Http\Resources\UserResource;
 
 class MarkerResource extends JsonResource
 {
@@ -17,7 +19,8 @@ class MarkerResource extends JsonResource
     public function toArray($request)
     {
         $image = null;
-
+        Log::info("AAAAAAAAAAAAAAAAA");
+        Log::info($request);
         if ($this->imgURL) {
             $expiresAt = new \DateTime('tomorrow');
             $imageReference = app('firebase.storage')->getBucket()->object($this->imgURL);
@@ -37,7 +40,7 @@ class MarkerResource extends JsonResource
             'status' => $this->status,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
-
+            'points' => $this->points,
             'distance' =>  round($distance, 2) . ' metros',
             "availability" => $this->availability,
             'imgURL' => $image,
@@ -58,6 +61,7 @@ class MarkerResource extends JsonResource
             'paper' => $this->paper,
             'tetra' => $this->tetra,
             'comments' =>  CommentResource::collection(($this->comment()->get())),
+            'user' => UserResource::collection(($this->user()->get())),
         ];
     }
 }

@@ -37,13 +37,15 @@ class UploadImage implements ShouldQueue
     protected $path;
     protected $filename;
     protected $id;
+    protected $model;
 
-    public function __construct($path, $filename, $id)
+    public function __construct($path, $filename, $id, $model)
     {
         //
         $this->id = $id;
         $this->path = $path;
         $this->filename = $filename;
+        $this->model = $model;
     }
 
     /**
@@ -66,7 +68,7 @@ class UploadImage implements ShouldQueue
         // Session::flash('message', 'Succesfully Uploaded');
         // }
 
-        $marker = Marker::find($this->id);
+        $marker = $this->model;
 
         Log::info("ID: " . $this->id);
         $marker->imgURL = $firebase_storage_path  . $this->filename;

@@ -6,6 +6,7 @@ use App\Http\Controllers\API\MarkerController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\ImageController;
 use App\Http\Controllers\API\CommentController;
+use App\Http\Controllers\API\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,6 +30,8 @@ Route::post('login', [RegisterController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
     Route::resource('markers', MarkerController::class);
+    Route::resource('users', UserController::class);
+
     Route::post('image', [ImageController::class, 'store']);
     Route::resource('comments', CommentController::class);
 });

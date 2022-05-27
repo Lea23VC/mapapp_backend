@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use EloquentFilter\Filterable;
+use App\ModelFilters\UserFilter;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Filterable;
 
     /**
      * The attributes that are mass assignable.
@@ -23,7 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         "firebaseUID",
-        "birthDate"
+        "birthDate",
+        'profilePic'
     ];
 
     /**
@@ -56,5 +59,10 @@ class User extends Authenticatable
     public function comment()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function modelFilter(): ?string
+    {
+        return $this->provideFilter(UserFilter::class);
     }
 }

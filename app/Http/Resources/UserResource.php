@@ -16,11 +16,27 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id' => $this->id,
-            'username' => $this->user_id,
-            'profilePic' => $this->profilePic
 
+
+        $image = null;
+
+        if ($this->imgURL) {
+            $expiresAt = new \DateTime('tomorrow');
+            $imageReference = app('firebase.storage')->getBucket()->object($this->imgURL);
+
+            if ($imageReference->exists()) {
+                $image = $imageReference->signedUrl($expiresAt);
+            } else {
+                $image = null;
+            }
+        }
+
+        return [
+            'id' => $this->firebaseUID,
+            'username' => $this->username,
+
+            'votes' => $this->comment->sum('votes') + $this->marker->sum('votes'),
+            'imgURL' => $image,
         ];
     }
 }
