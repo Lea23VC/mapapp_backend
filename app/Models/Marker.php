@@ -18,7 +18,7 @@ class Marker extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'status', 'availability', 'imgURL', 'points', 'latitude', 'longitude', 'address_number', 'address_street', 'commune', 'city', 'state', 'country',
+        'title', 'status', 'availability', 'imgURL', 'latitude', 'longitude', 'address_number', 'address_street', 'commune', 'city', 'state', 'country',
         'PE',
         'PET',
         'PVC',
@@ -31,7 +31,9 @@ class Marker extends Model
         "otherPapers",
         "otherPlastics",
         "paper",
-        "tetra"
+        "tetra",
+        "likes",
+        "dislikes"
     ];
 
 
@@ -61,6 +63,14 @@ class Marker extends Model
     {
         return $this->hasOne(Comment::class);
     }
+
+
+    public function likedByUser()
+    {
+        return $this->belongsToMany(User::class)->withPivot('voted');
+    }
+
+
     public function modelFilter(): ?string
     {
         return $this->provideFilter(MarkerFilter::class);

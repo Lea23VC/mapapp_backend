@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return $this->provideFilter(UserFilter::class);
     }
+
+    public function votedMarkers()
+    {
+        return $this->BelongsToMany(Marker::class);
+    }
 }

@@ -165,8 +165,23 @@ class MarkerController extends BaseController
             $marker->availability = $input["availability"];
         }
 
-        if ($request->has("points")) {
-            $marker->points = $input["points"];
+        if ($request->has("likes") && $request->has("dislikes") && $request->has("user_voted") && $request->has("vote_action")) {
+
+            $user = User::where('firebaseUID', $input["user_voted"])->first();
+
+            if ($user) {
+                Log::info("FOUND!!");
+                $marker->likes = $input["likes"];
+                $marker->dislikes = $input["dislikes"];
+
+                $user_maker = $marker->likedByUser()->where('user_id', $user->id)->first();
+
+                if (!$user_maker) {
+                    $marker->likedByUser()->attach($user, array('voted' => $input["vote_action"]));
+                } else {
+                    $marker->likedByUser()->updateExistingPivot($user, array('voted' => $input["vote_action"]));
+                }
+            }
         }
 
         if ($request->has("PE")) {

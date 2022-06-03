@@ -7,6 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\CommentResource;
 use Log;
 use App\Http\Resources\UserResource;
+use Auth;
 
 class MarkerResource extends JsonResource
 {
@@ -18,9 +19,13 @@ class MarkerResource extends JsonResource
      */
     public function toArray($request)
     {
+
+        $input = $request->all();
         $image = null;
+        $id = Auth::user()->id;
         Log::info("AAAAAAAAAAAAAAAAA");
         Log::info($request);
+        Log::info($id);
         if ($this->imgURL) {
             $expiresAt = new \DateTime('tomorrow');
             $imageReference = app('firebase.storage')->getBucket()->object($this->imgURL);
@@ -32,6 +37,8 @@ class MarkerResource extends JsonResource
             }
         }
 
+        $voted_marker = $this->likedByUser()->where('user_id', $id)->first();
+
         $distance =  (((acos(sin((-33.483605 * pi() / 180)) * sin(($this->latitude * pi() / 180)) + cos((-33.483605 * pi() / 180)) * cos(($this->latitude * pi() / 180)) * cos(((-70.6354267 - $this->longitude) * pi() / 180)))) * 180 / pi()) * 60 * 1.1515 * 1.609344) * 1000;
         return [
             'id' => $this->id,
@@ -40,7 +47,8 @@ class MarkerResource extends JsonResource
             'status' => $this->status,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
-            'points' => $this->points,
+            'likes' => $this->likes,
+            'dislikes' => $this->dislikes,
             'distance' =>  round($distance, 2) . ' metros',
             "availability" => $this->availability,
             'imgURL' => $image,
@@ -62,6 +70,7 @@ class MarkerResource extends JsonResource
             'tetra' => $this->tetra,
             'comments' =>  CommentResource::collection(($this->comment()->get())),
             'user' => UserResource::collection(($this->user()->get())),
+            "voted_marker" =>  $voted_marker != null ? $voted_marker->pivot->voted : 0,
         ];
     }
 }
