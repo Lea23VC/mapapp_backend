@@ -53,11 +53,12 @@ class CommentController extends BaseController
         }
         // $geocodertest = json_decode(app('geocoder')->reverse(-33.485090, -70.640190)->toJson(), true);
         // Log::info($geocodertest["properties"]["streetName"]);
+        $user = User::where('firebaseUID', $input["user_id"])->first();
 
-        $user = User::find($request->json()->all()["user_id"]);
-        $marker = Marker::find($request->json()->all()["marker_id"]);
+        Log::info("Marker-Id: " . $input["marker_id"]);
+        $marker = Marker::find($input["marker_id"]);
         if ($user && $marker) {
-            $comment = Comment::create($input);
+            $comment = Comment::create($request->except('marker_id', 'user_id'));
             $user->comment()->save($comment);
             $marker->comment()->save($comment);
             return $this->sendResponse(new CommentResource($comment), 'Comment created successfully.');
