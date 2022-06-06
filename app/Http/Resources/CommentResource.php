@@ -24,8 +24,8 @@ class CommentResource extends JsonResource
             // 'longitude' => $this->longitude,
             // "availability" => $this->availability,
             // 'address' => $this->address_street . " " . $this->address_number . ", " . $this->commune . ", " . $this->city . ", " . $this->state . ", " . $this->country,
-            'created_at' => $this->created_at->format('d/m/Y'),
-            'updated_at' => $this->updated_at->format('d/m/Y'),
+            'created_at' => $this->created_at->format('d/m/Y H:i'),
+            'updated_at' => $this->updated_at->format('d/m/Y H:i'),
             'user' => UserResource::collection($this->user()->get())
         ];
     }

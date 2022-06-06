@@ -68,7 +68,7 @@ class MarkerResource extends JsonResource
             'otherPlastics' => $this->otherPlastics,
             'paper' => $this->paper,
             'tetra' => $this->tetra,
-            'comments' =>  CommentResource::collection(($this->comment()->get())),
+            'comments' =>  CommentResource::collection(($this->comment()->latest()->get())),
             'user' => UserResource::collection(($this->user()->get())),
             "voted_marker" =>  $voted_marker != null ? $voted_marker->pivot->voted : 0,
         ];

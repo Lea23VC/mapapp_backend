@@ -23,12 +23,7 @@ class CommentFilter extends ModelFilter
         });
     }
 
-    // public function id($id): CommentFilter
-    // {
-    //     return $this->where(function ($q) use ($id) {
-    //         return $q->where("id", "LIKE", "%$id%");
-    //     });
-    // }
+
 
     public function id($id): CommentFilter
     {
@@ -45,7 +40,7 @@ class CommentFilter extends ModelFilter
     }
 
 
-    public function marker_id($marker_id): CommentFilter
+    public function markerId($marker_id): CommentFilter
     {
         return $this->where(function ($q) use ($marker_id) {
             return $q->where("marker_id", $marker_id);

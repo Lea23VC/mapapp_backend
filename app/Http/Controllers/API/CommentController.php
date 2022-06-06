@@ -38,7 +38,7 @@ class CommentController extends BaseController
     public function store(Request $request)
     {
         $input = $request->all();
-
+        $items_per_page = $request->input("items_per_page");
         // Log::info($request->json()->all()["data"]);
 
         $validator = Validator::make($input, [
@@ -61,7 +61,7 @@ class CommentController extends BaseController
             $comment = Comment::create($request->except('marker_id', 'user_id'));
             $user->comment()->save($comment);
             $marker->comment()->save($comment);
-            return $this->sendResponse(new CommentResource($comment), 'Comment created successfully.');
+            return $this->sendResponse(CommentResource::collection(Comment::where("marker_id", $marker->id)->latest()->paginate($items_per_page)), 'Comment created successfully.');
         } else {
             return $this->sendError('User or marker not found');
         }

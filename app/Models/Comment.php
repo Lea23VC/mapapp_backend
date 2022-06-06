@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
+use App\ModelFilters\CommentFilter;
 
 class Comment extends Model
 {
@@ -13,6 +14,7 @@ class Comment extends Model
     protected $fillable = [
         'message',
         'user_id',
+        'marker_id',
         'votes',
         'id'
     ];
@@ -26,5 +28,9 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function modelFilter(): ?string
+    {
+        return $this->provideFilter(CommentFilter::class);
     }
 }
