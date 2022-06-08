@@ -28,6 +28,7 @@ class MarkerResourceCoords extends JsonResource
             }
         }
         return [
+            'distance' => $this->distance,
             'id' => $this->id,
             'user_id' => $this->user_id,
             'latitude' => $this->latitude,

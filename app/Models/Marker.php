@@ -75,4 +75,9 @@ class Marker extends Model
     {
         return $this->provideFilter(MarkerFilter::class);
     }
+
+    public function materials()
+    {
+        return $this->belongsToMany(Material::class);
+    }
 }

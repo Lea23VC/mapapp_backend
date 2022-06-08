@@ -13,6 +13,8 @@ use App\Http\Resources\MarkerResourceCoords;
 
 use Log;
 use App\Models\User;
+use App\Models\Material;
+
 use App\Jobs\AddAddressFromCoords;
 use Illuminate\Support\Str;
 use Image;
@@ -53,8 +55,12 @@ class MarkerController extends BaseController
 
 
 
-
-        return MarkerResourceCoords::collection(Marker::filter($request->all())->paginate($items_per_page));
+        if ($request->has("distanceFromCoords")) {
+            $coords = json_decode($request->input('distanceFromCoords'));
+            return MarkerResourceCoords::collection(Marker::filter($request->all())->selectRaw('*,(((acos(sin((' . $coords[0] . '* pi() / 180)) * sin((`latitude` * pi() / 180)) + cos((' . $coords[0] . '* pi() / 180)) * cos((`latitude` * pi() / 180)) * cos(((' . $coords[1] . ' - `longitude`) * pi() / 180)))) * 180 / pi()) * 60 * 1.1515 * 1.609344) as distance')->orderBy('distance', 'asc')->paginate($items_per_page));
+        } else {
+            return MarkerResourceCoords::collection(Marker::filter($request->all())->paginate($items_per_page));
+        }
     }
 
     /**
@@ -69,6 +75,8 @@ class MarkerController extends BaseController
 
         // Log::info($request->json()->all()["data"]);
 
+        Log::info("Recyclable materials");
+        Log::info($input);
         $validator = Validator::make($input, [
             'title' => 'required',
             'image' => 'required',
@@ -97,6 +105,13 @@ class MarkerController extends BaseController
                 Log::info("ID: " . $marker->id);
                 UploadImage::dispatch($path, $filename, $marker->id, $marker);
             }
+
+
+
+            // $material = Material::where("code", 'PE')->first();
+            // Log::info("Material: ");
+            // Log::info($material);
+            // $marker->materials()->attach($material);
 
 
             return $this->sendResponse(new MarkerResource($marker), 'Marker created successfully.');
@@ -185,7 +200,10 @@ class MarkerController extends BaseController
         }
 
         if ($request->has("PE")) {
-            $marker->PE = $input["PE"];
+            $material = Material::where("code", 'PE')->first();
+            Log::info("Material: ");
+            Log::info($material);
+            $marker->materials()->attach($material);
         }
 
         if ($request->has("PET")) {
