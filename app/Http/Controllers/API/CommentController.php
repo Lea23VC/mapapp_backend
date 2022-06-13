@@ -123,8 +123,23 @@ class CommentController extends BaseController
             $comment->message = $input["message"];
         }
 
-        if ($request->has("votes")) {
-            $comment->votes = $input["votes"];
+        if ($request->has("likes") && $request->has("dislikes") && $request->has("user_voted") && $request->has("vote_action")) {
+
+            $user = User::where('firebaseUID', $input["user_voted"])->first();
+
+            if ($user) {
+                Log::info("FOUND!!");
+                $comment->likes = $input["likes"];
+                $comment->dislikes = $input["dislikes"];
+
+                $user_maker = $comment->likedByUser()->where('user_id', $user->id)->first();
+
+                if (!$user_maker) {
+                    $comment->likedByUser()->attach($user, array('voted' => $input["vote_action"]));
+                } else {
+                    $comment->likedByUser()->updateExistingPivot($user, array('voted' => $input["vote_action"]));
+                }
+            }
         }
 
 

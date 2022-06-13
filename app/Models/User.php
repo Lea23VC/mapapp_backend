@@ -68,6 +68,11 @@ class User extends Authenticatable
 
     public function votedMarkers()
     {
-        return $this->BelongsToMany(Marker::class);
+        return $this->BelongsToMany(Marker::class)->withPivot('voted');
+    }
+
+    public function votedComments()
+    {
+        return $this->BelongsToMany(Comment::class)->withPivot('voted');
     }
 }

@@ -39,7 +39,12 @@ class MarkerResource extends JsonResource
 
         $voted_marker = $this->likedByUser()->where('user_id', $id)->first();
 
-        $distance =  (((acos(sin((-33.483605 * pi() / 180)) * sin(($this->latitude * pi() / 180)) + cos((-33.483605 * pi() / 180)) * cos(($this->latitude * pi() / 180)) * cos(((-70.6354267 - $this->longitude) * pi() / 180)))) * 180 / pi()) * 60 * 1.1515 * 1.609344) * 1000;
+        $distance = 0;
+        if ($request->has('distanceFromCoords')) {
+            $coords = json_decode($request->input('distanceFromCoords'));
+            $distance = (((acos(sin(($coords[0] * pi() / 180)) * sin(($this->latitude * pi() / 180)) + cos(($coords[0] * pi() / 180)) * cos(($this->latitude * pi() / 180)) * cos((($coords[1] - $this->longitude) * pi() / 180)))) * 180 / pi()) * 60 * 1.1515 * 1.609344);
+        }
+
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,

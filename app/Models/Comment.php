@@ -15,7 +15,8 @@ class Comment extends Model
         'message',
         'user_id',
         'marker_id',
-        'votes',
+        'likes',
+        'dislikes',
         'id'
     ];
 
@@ -24,7 +25,10 @@ class Comment extends Model
     {
         return $this->belongsTo(Marker::class);
     }
-
+    public function likedByUser()
+    {
+        return $this->belongsToMany(User::class)->withPivot('voted');
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -126,15 +126,24 @@ class MarkerController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
+
+
     {
+
+
         $marker = Marker::find($id);
 
         if (is_null($marker)) {
             return $this->sendError('marker not found.');
         }
 
-        return $this->sendResponse(new MarkerResource($marker), 'Marker retrieved successfully.');
+        if ($request->has("distanceFromCoords")) {
+
+            return $this->sendResponse(new MarkerResource($marker), 'Marker retrieved successfully.');
+        } else {
+            return $this->sendResponse(new MarkerResource($marker), 'Marker retrieved successfully.');
+        }
     }
 
     /**
