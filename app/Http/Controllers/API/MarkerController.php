@@ -106,12 +106,18 @@ class MarkerController extends BaseController
                 UploadImage::dispatch($path, $filename, $marker->id, $marker);
             }
 
+            $materials = json_decode($input['recyclableMaterials']);
+
+            Log::info("Materials: ");
+            Log::info($materials);
+            foreach ($materials as $materialInput) {
+                $material = Material::where("code", $materialInput->code)->first();
+                Log::info("Material: ");
+                Log::info($material);
+                $marker->materials()->attach($material);
+            }
 
 
-            // $material = Material::where("code", 'PE')->first();
-            // Log::info("Material: ");
-            // Log::info($material);
-            // $marker->materials()->attach($material);
 
 
             return $this->sendResponse(new MarkerResource($marker), 'Marker created successfully.');

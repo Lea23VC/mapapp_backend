@@ -8,6 +8,7 @@ use App\Http\Resources\CommentResource;
 use Log;
 use App\Http\Resources\UserResource;
 use Auth;
+use App\Http\Resources\MaterialResource;
 
 class MarkerResource extends JsonResource
 {
@@ -76,6 +77,7 @@ class MarkerResource extends JsonResource
             'comments' =>  CommentResource::collection(($this->comment()->latest()->get())),
             'user' => UserResource::collection(($this->user()->get())),
             "voted_marker" =>  $voted_marker != null ? $voted_marker->pivot->voted : 0,
+            'materials' => MaterialResource::collection($this->materials()->get()),
         ];
     }
 }
