@@ -35,7 +35,7 @@ class UserResource extends JsonResource
             'id' => $this->firebaseUID,
             'username' => $this->username,
 
-            'votes' => $this->comment->sum('votes') + $this->marker->sum('likes'),
+            'likes' => $this->comment->sum('likes') + $this->marker->sum('likes'),
             'imgURL' => $image,
         ];
     }
