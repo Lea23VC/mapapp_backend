@@ -125,8 +125,7 @@ class MarkerController extends BaseController
                 Log::info($material);
                 $marker->materials()->attach($material);
             }
-            $status = Status::where("code", $input['status'])->first();
-            $status->marker->save($marker);
+            $marker->status()->save(Status::where("code", $input['status'])->first());
 
 
 
