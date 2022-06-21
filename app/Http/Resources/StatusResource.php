@@ -16,8 +16,8 @@ class StatusResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'code' => $this->code,
+            'label' => $this->name,
+            'value' => $this->code,
         ];
     }
 }
