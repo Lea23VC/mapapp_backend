@@ -98,7 +98,7 @@ class RegisterController extends BaseController
         // You may format this object to suit your needs
         return response()->json([
             'id' => $user->id,
-            'permissions' => $user->permissions()->get(),
+            'permissions' => $user->permission()->get(),
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(
