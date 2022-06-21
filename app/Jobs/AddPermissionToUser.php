@@ -19,6 +19,7 @@ class AddPermissionToUser implements ShouldQueue
      *
      * @return void
      */
+    protected $user;
     public function __construct($user)
     {
         //
