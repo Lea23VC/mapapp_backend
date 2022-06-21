@@ -143,7 +143,7 @@ class CommentController extends BaseController
                     $comment->likedByUser()->updateExistingPivot($user, array('voted' => $input["vote_action"]));
                 }
 
-                AddPermissionToUser::dispatch($comment->user());
+                AddPermissionToUser::dispatch($comment->user);
             }
         }
 
