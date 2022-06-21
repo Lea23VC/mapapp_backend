@@ -17,6 +17,7 @@ use App\Http\Resources\MarkerResourceCoords;
 use Log;
 use App\Models\User;
 use App\Models\Material;
+use App\Models\Permission;
 
 use App\Jobs\AddAddressFromCoords;
 use Illuminate\Support\Str;
@@ -299,7 +300,7 @@ class MarkerController extends BaseController
 
     public function getAllStatus(): JsonResponse
     {
-        $status = DB::table('permission_user')->get();
+        $status = Permission::all();
         return response()->json($status);
     }
 }
