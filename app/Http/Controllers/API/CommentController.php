@@ -14,6 +14,9 @@ use App\Models\User;
 use App\Models\Marker;
 use App\Jobs\AddAddressFromCoords;
 
+use App\Jobs\AddPermissionToUser;
+
+
 class CommentController extends BaseController
 {
     //
@@ -139,6 +142,8 @@ class CommentController extends BaseController
                 } else {
                     $comment->likedByUser()->updateExistingPivot($user, array('voted' => $input["vote_action"]));
                 }
+
+                AddPermissionToUser::dispatch($user);
             }
         }
 

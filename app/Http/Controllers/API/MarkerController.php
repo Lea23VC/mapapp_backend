@@ -20,6 +20,7 @@ use Illuminate\Support\Str;
 use Image;
 use App\Jobs\UploadImage;
 
+use App\Jobs\AddPermissionToUser;
 
 class MarkerController extends BaseController
 {
@@ -211,6 +212,8 @@ class MarkerController extends BaseController
                 } else {
                     $marker->likedByUser()->updateExistingPivot($user, array('voted' => $input["vote_action"]));
                 }
+
+                AddPermissionToUser::dispatch($user);
             }
         }
 

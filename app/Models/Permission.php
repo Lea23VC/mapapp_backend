@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Permission extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+
+        'name', 'code',
+    ];
+
+    public function user()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
