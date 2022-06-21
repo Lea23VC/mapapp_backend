@@ -9,6 +9,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Permission;
+use App\Models\User;
+
 use Log;
 
 class AddPermissionToUser implements ShouldQueue
@@ -35,7 +37,7 @@ class AddPermissionToUser implements ShouldQueue
     public function handle()
     {
         //
-        $user = $this->user;
+        $user = User::find($this->user->id);
         $total_like = $user->comment->sum('likes') + $user->marker->sum('likes');
         $total_dislike = $user->comment->sum('dislikes') + $user->marker->sum('dislikes');
         Log::info($user);
