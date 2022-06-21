@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Resources\MarkerResource;
 use App\Http\Resources\MarkerResourceCoords;
+use App\Http\Resources\PermissionResource;
 
 use Log;
 use App\Models\User;
@@ -298,9 +299,9 @@ class MarkerController extends BaseController
         return $this->sendResponse([], 'Marker deleted successfully.');
     }
 
-    public function getAllStatus(): JsonResponse
+    public function getAllStatus()
     {
-        $status = Permission::all();
-        return response()->json($status);
+        $permissions = Permission::all();
+        return $this->sendResponse(MarkerResource::collection($permissions), 'Marker created successfully.');
     }
 }
