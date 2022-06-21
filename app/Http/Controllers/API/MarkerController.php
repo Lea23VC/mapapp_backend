@@ -302,6 +302,6 @@ class MarkerController extends BaseController
     public function getAllStatus()
     {
         $permissions = Permission::all();
-        return $this->sendResponse(MarkerResource::collection($permissions), 'Marker created successfully.');
+        return $this->sendResponse(PermissionResource::collection($permissions), 'Marker created successfully.');
     }
 }
