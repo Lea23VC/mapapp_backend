@@ -53,7 +53,7 @@ class User extends Authenticatable
     }
     public function permission()
     {
-        return $this->hasMany(Permission::class);
+        return $this->belongsToMany(Permission::class);
     }
 
     public function comment()
