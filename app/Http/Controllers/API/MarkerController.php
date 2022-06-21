@@ -14,11 +14,14 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Resources\MarkerResource;
 use App\Http\Resources\MarkerResourceCoords;
 use App\Http\Resources\PermissionResource;
+use App\Http\Resources\StatusResource;
+
 
 use Log;
 use App\Models\User;
 use App\Models\Material;
 use App\Models\Permission;
+use App\Models\Status;
 
 use App\Jobs\AddAddressFromCoords;
 use Illuminate\Support\Str;
@@ -301,7 +304,13 @@ class MarkerController extends BaseController
 
     public function getAllStatus()
     {
+        $status = Status::all();
+        return $this->sendResponse(StatusResource::collection($status), 'Status retrieved successfully.');
+    }
+
+    public function getAllPermissions()
+    {
         $permissions = Permission::all();
-        return $this->sendResponse(PermissionResource::collection($permissions), 'Marker created successfully.');
+        return $this->sendResponse(PermissionResource::collection($permissions), 'Status retrieved successfully.');
     }
 }

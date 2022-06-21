@@ -1,0 +1,24 @@
+[
+    {
+      "name": "Lleno",
+      "code": "full"
+    },
+    {
+      "name": "Medianamente lleno",
+      "code": "halfFull"
+    },
+    {
+      "name": "Vacío",
+      "code": "empty"
+    },
+    {
+      "name": "Vacio completamente",
+      "code": "fullEmpty"
+    }, 
+    {
+      "name": "Mal Estado",
+      "code": "poorCondition"
+    }
+
+
+   ]
