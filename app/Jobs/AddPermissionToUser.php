@@ -33,26 +33,27 @@ class AddPermissionToUser implements ShouldQueue
     public function handle()
     {
         //
-        $total_like = $this->user->comment->sum('likes') + $this->user->marker->sum('likes');
-        $total_dislike = $this->user->comment->sum('dislikes') + $this->user->marker->sum('dislikes');
+        $user = $this->user;
+        $total_like = $user->comment->sum('likes') + $user->marker->sum('likes');
+        $total_dislike = $user->comment->sum('dislikes') + $user->marker->sum('dislikes');
 
         switch ($total_like) {
             case 10:
-                $this->user->permission->attach(Permission::where("code", "change_state")->first());
+                $user->permission->attach(Permission::where("code", "change_state")->first());
                 break;
             case 20:
-                $this->user->permission->attach(Permission::where("code", "add_message")->first());
+                $user->permission->attach(Permission::where("code", "add_message")->first());
                 break;
             case 30:
-                $this->user->permission->attach(Permission::where("code", "add_message")->first());
+                $user->permission->attach(Permission::where("code", "add_message")->first());
                 break;
             case 40:
-                $this->user->permission->attach(Permission::where("code", "disable_marker")->first());
-                $this->user->permission->attach(Permission::where("code", "edit_marker")->first());
+                $user->permission->attach(Permission::where("code", "disable_marker")->first());
+                $user->permission->attach(Permission::where("code", "edit_marker")->first());
                 break;
         }
 
-        $this->user->save();
+        $user->save();
 
         // switch ($total_dislike) {
         //     case 50:
