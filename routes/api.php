@@ -31,16 +31,17 @@ Route::post('login', [RegisterController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
     Route::resource('markers', MarkerController::class);
 
-    Route::prefix("markers")
-        ->group(function () {
-            Route::get("getAllStatus", [
-                MarkerController::class,
-                "getAllStatus",
-            ]);
-        });
+
 
     Route::resource('users', UserController::class);
 
     Route::post('image', [ImageController::class, 'store']);
     Route::resource('comments', CommentController::class);
 });
+Route::prefix("markers")
+    ->group(function () {
+        Route::get("getAllStatus", [
+            MarkerController::class,
+            "getAllStatus",
+        ]);
+    });
