@@ -44,16 +44,16 @@ class AddPermissionToUser implements ShouldQueue
         Log::info("Total likes: " . $total_like);
         switch (true) {
             case in_array($total_like, range(10, 19)):
-                $user->permission()->attach(Permission::where("code", "change_state")->first());
+                $user->permission()->syncWithoutDetaching(Permission::where("code", "change_state")->first());
                 Log::info("Change state permission added");
                 break;
             case in_array($total_like, range(20, 29)):
-                $user->permission()->attach(Permission::where("code", "add_message")->first());
+                $user->permission()->syncWithoutDetaching(Permission::where("code", "add_message")->first());
                 Log::info("Add message permission added");
                 break;
             case in_array($total_like, range(30, 39)):
-                $user->permission()->attach(Permission::where("code", "disable_marker")->first());
-                $user->permission()->attach(Permission::where("code", "edit_marker")->first());
+                $user->permission()->syncWithoutDetaching(Permission::where("code", "disable_marker")->first());
+                $user->permission()->syncWithoutDetaching(Permission::where("code", "edit_marker")->first());
                 Log::info("Disable and edit marker permissions added");
                 break;
             default:
