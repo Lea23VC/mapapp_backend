@@ -213,7 +213,7 @@ class MarkerController extends BaseController
                     $marker->likedByUser()->updateExistingPivot($user, array('voted' => $input["vote_action"]));
                 }
 
-                AddPermissionToUser::dispatch($user);
+                AddPermissionToUser::dispatch($marker->user());
             }
         }
 
