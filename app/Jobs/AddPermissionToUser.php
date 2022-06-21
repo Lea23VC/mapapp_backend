@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Permission;
+use Log;
 
 class AddPermissionToUser implements ShouldQueue
 {
@@ -38,19 +39,22 @@ class AddPermissionToUser implements ShouldQueue
         $total_like = $user->comment->sum('likes') + $user->marker->sum('likes');
         $total_dislike = $user->comment->sum('dislikes') + $user->marker->sum('dislikes');
 
-        switch ($total_like) {
-            case 10:
+        switch (true) {
+            case in_array($total_like, range(10, 19)):
                 $user->permission->attach(Permission::where("code", "change_state")->first());
+                Log::info("Change state permission added");
                 break;
-            case 20:
+            case in_array($total_like, range(20, 29)):
                 $user->permission->attach(Permission::where("code", "add_message")->first());
+                Log::info("Add message permission added");
                 break;
-            case 30:
-                $user->permission->attach(Permission::where("code", "add_message")->first());
-                break;
-            case 40:
+            case in_array($total_like, range(30, 39)):
                 $user->permission->attach(Permission::where("code", "disable_marker")->first());
                 $user->permission->attach(Permission::where("code", "edit_marker")->first());
+                Log::info("Disable and edit marker permissions added");
+                break;
+            default:
+                Log::info("Permission not updated");
                 break;
         }
 
