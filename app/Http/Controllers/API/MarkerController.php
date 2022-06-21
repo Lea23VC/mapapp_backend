@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Support\Facades\DB;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Marker;
 use Validator;
+use Illuminate\Http\JsonResponse;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Resources\MarkerResource;
@@ -292,5 +295,11 @@ class MarkerController extends BaseController
         $marker->delete();
 
         return $this->sendResponse([], 'Marker deleted successfully.');
+    }
+
+    public function getAllStatus(): JsonResponse
+    {
+        $status = DB::table('permission_user')->get();
+        return response()->json($status);
     }
 }
