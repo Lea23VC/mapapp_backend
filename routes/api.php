@@ -38,7 +38,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('image', [ImageController::class, 'store']);
     Route::resource('comments', CommentController::class);
 });
-Route::prefix("markers")
+Route::prefix("data")
     ->group(function () {
         Route::get("getAllStatus", [
             MarkerController::class,
