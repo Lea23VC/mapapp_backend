@@ -38,6 +38,7 @@ class AddPermissionToUser implements ShouldQueue
         $user = $this->user;
         $total_like = $user->comment->sum('likes') + $user->marker->sum('likes');
         $total_dislike = $user->comment->sum('dislikes') + $user->marker->sum('dislikes');
+        Log::info($user);
         Log::info("Total likes: " . $total_like);
         switch (true) {
             case in_array($total_like, range(10, 19)):
