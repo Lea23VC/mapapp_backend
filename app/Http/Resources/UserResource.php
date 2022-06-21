@@ -37,6 +37,7 @@ class UserResource extends JsonResource
 
             'likes' => $this->comment->sum('likes') + $this->marker->sum('likes'),
             'imgURL' => $image,
+            'permissions' => $this->permissions()->get()
         ];
     }
 }
