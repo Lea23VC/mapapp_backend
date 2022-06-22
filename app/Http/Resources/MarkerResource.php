@@ -9,6 +9,7 @@ use Log;
 use App\Http\Resources\UserResource;
 use Auth;
 use App\Http\Resources\MaterialResource;
+use App\Http\Resources\StatusResource;
 
 class MarkerResource extends JsonResource
 {
@@ -50,7 +51,7 @@ class MarkerResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'title' => $this->title,
-            'status' => $this->status,
+            'status' => StatusResource::collection($this->status()->get()),
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'likes' => $this->likes,
