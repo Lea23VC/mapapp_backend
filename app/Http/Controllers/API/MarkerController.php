@@ -227,10 +227,7 @@ class MarkerController extends BaseController
         }
 
         if ($request->has("PE")) {
-            $material = Material::where("code", 'PE')->first();
-            Log::info("Material: ");
-            Log::info($material);
-            $marker->materials()->attach($material);
+            $marker->PE = $input["PE"];
         }
 
         if ($request->has("PET")) {
@@ -281,13 +278,18 @@ class MarkerController extends BaseController
             $marker->tetra = $input["tetra"];
         }
 
-        $materials = json_decode($input['recyclableMaterials']);
 
-        foreach ($materials as $materialInput) {
-            $material = Material::where("code", $materialInput->code)->first();
-            Log::info("Material: ");
-            Log::info($material);
-            $marker->materials()->syncWithoutDetaching($material);
+        if ($request->has("recyclableMaterials")) {
+            $marker->materials()->sync([]);
+
+            $materials = json_decode($input['recyclableMaterials']);
+
+            foreach ($materials as $materialInput) {
+                $material = Material::where("code", $materialInput->code)->first();
+                Log::info("Material: ");
+                Log::info($material);
+                $marker->materials()->syncWithoutDetaching($material);
+            }
         }
 
         if ($request->hasFile('image')) {
