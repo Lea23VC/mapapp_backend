@@ -81,7 +81,7 @@ class Marker extends Model
         return $this->belongsToMany(Material::class);
     }
 
-    public function markerStatus()
+    public function status()
     {
         return $this->belongsTo(Status::class);
     }
