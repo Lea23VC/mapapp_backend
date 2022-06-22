@@ -55,7 +55,7 @@ class MarkerResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'title' => $this->title,
-            'status' => sizeof($statuses) > 0 ? new StatusResource($statuses) : [],
+            'status' => sizeof($statuses) > 0 ? new StatusResource($statuses[0]) : [],
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'likes' => $this->likes,
