@@ -280,7 +280,7 @@ class MarkerController extends BaseController
 
 
         if ($request->has("recyclableMaterials")) {
-            $marker->materials()->sync([]);
+            $marker->materials()->detach();
 
             $materials = json_decode($input['recyclableMaterials']);
 
