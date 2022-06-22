@@ -125,10 +125,10 @@ class MarkerController extends BaseController
                 Log::info($material);
                 $marker->materials()->attach($material);
             }
-            $marker->markerStatus()->save(Status::where("code", $input['status'])->first());
+            $marker->markerStatus()->associate(Status::where("code", $input['status'])->first());
 
 
-
+            $marker->save();
 
             return $this->sendResponse(new MarkerResource($marker), 'Marker created successfully.');
         } else {
