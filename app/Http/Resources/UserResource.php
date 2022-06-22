@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\PermissionResource;
 
 class UserResource extends JsonResource
 {
@@ -37,7 +38,7 @@ class UserResource extends JsonResource
 
             'likes' => $this->comment->sum('likes') + $this->marker->sum('likes'),
             'imgURL' => $image,
-            'permissions' => $this->permission()->get()
+            'permissions' => PermissionResource::collection($this->permission()->get())
         ];
     }
 }
