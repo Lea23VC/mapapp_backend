@@ -190,7 +190,7 @@ class MarkerController extends BaseController
         }
 
         if ($request->has("status")) {
-            $marker->status = $input["status"];
+            $marker->status()->associate(Status::where("code", $input['status'])->first());
         }
 
         if ($request->has("latitude")) {
