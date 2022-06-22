@@ -115,21 +115,21 @@ class MarkerController extends BaseController
                 UploadImage::dispatch($path, $filename, $marker->id, $marker);
             }
 
-            if ($request->has("recyclableMaterials")) {
-                $marker->materials()->sync([]);
-                $materials = json_decode($input['recyclableMaterials']);
 
-                foreach ($materials as $materialInput) {
-                    $material = Material::where("code", $materialInput->code)->first();
-                    Log::info("Material: ");
-                    Log::info($material);
-                    Log::info("Material input: ");
-                    Log::info($materialInput->value);
-                    if ($materialInput->value) {
-                        $marker->materials()->syncWithoutDetaching($material);
-                    }
+            $marker->materials()->sync([]);
+            $materials = json_decode($input['recyclableMaterials']);
+
+            foreach ($materials as $materialInput) {
+                $material = Material::where("code", $materialInput->code)->first();
+                Log::info("Material: ");
+                Log::info($material);
+                Log::info("Material input: ");
+                Log::info($materialInput->value);
+                if ($materialInput->value) {
+                    $marker->materials()->syncWithoutDetaching($material);
                 }
             }
+
 
 
             $marker->status()->associate(Status::where("code", $input['status'])->first());
