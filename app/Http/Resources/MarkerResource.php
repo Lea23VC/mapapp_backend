@@ -48,6 +48,8 @@ class MarkerResource extends JsonResource
         }
 
         $statuses = $this->status()->get();
+        Log::info("Estado: ");
+        Log::info($statuses);
 
         return [
             'id' => $this->id,
