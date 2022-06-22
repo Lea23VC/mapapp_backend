@@ -281,8 +281,24 @@ class MarkerController extends BaseController
             $marker->tetra = $input["tetra"];
         }
 
+        $materials = json_decode($input['recyclableMaterials']);
 
+        foreach ($materials as $materialInput) {
+            $material = Material::where("code", $materialInput->code)->first();
+            Log::info("Material: ");
+            Log::info($material);
+            $marker->materials()->syncWithoutDetaching($material);
+        }
 
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
+            $path = 'tmp/' . $filename;
+            Image::make($image->getRealPath())->save($path);
+            $request->replace(['image' => $path]);
+            Log::info("ID: " . $marker->id);
+            UploadImage::dispatch($path, $filename, $marker->id, $marker);
+        }
 
         // $marker->detail = $input['detail'];
         $marker->save();
