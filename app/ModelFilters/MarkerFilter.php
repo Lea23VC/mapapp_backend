@@ -176,11 +176,11 @@ class MarkerFilter extends ModelFilter
         });
     }
 
-    // public function distanceFromCoords($distanceFromCoords): MarkerFilter
-    // {
-    //     return $this->where(function ($q) use ($distanceFromCoords) {
-    //         $coords = json_decode($distanceFromCoords);
-    //         return $q->where("distance", "<", 5);
-    //     });
-    // } 
+    public function distanceFromCoords($distanceFromCoords): MarkerFilter
+    {
+        return $this->where(function ($q) use ($distanceFromCoords) {
+            $coords = json_decode($distanceFromCoords);
+            return $q->where("distance", "<", 5);
+        });
+    }
 }

@@ -66,7 +66,7 @@ class MarkerController extends BaseController
 
         if ($request->has("distanceFromCoords")) {
             $coords = json_decode($request->input('distanceFromCoords'));
-            return MarkerResourceCoords::collection(Marker::filter($request->all())->selectRaw('*,(((acos(sin((' . $coords[0] . '* pi() / 180)) * sin((`latitude` * pi() / 180)) + cos((' . $coords[0] . '* pi() / 180)) * cos((`latitude` * pi() / 180)) * cos(((' . $coords[1] . ' - `longitude`) * pi() / 180)))) * 180 / pi()) * 60 * 1.1515 * 1.609344) as distance')->where('distance', '<', 5)->orderBy('distance', 'desc')->paginate($items_per_page));
+            return MarkerResourceCoords::collection(Marker::filter($request->all())->selectRaw('*,(((acos(sin((' . $coords[0] . '* pi() / 180)) * sin((`latitude` * pi() / 180)) + cos((' . $coords[0] . '* pi() / 180)) * cos((`latitude` * pi() / 180)) * cos(((' . $coords[1] . ' - `longitude`) * pi() / 180)))) * 180 / pi()) * 60 * 1.1515 * 1.609344) as distance')->orderBy('distance', 'desc')->paginate($items_per_page));
         } else {
             return MarkerResourceCoords::collection(Marker::filter($request->all())->paginate($items_per_page));
         }
