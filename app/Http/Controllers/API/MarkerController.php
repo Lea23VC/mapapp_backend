@@ -281,7 +281,7 @@ class MarkerController extends BaseController
 
         if ($request->has("recyclableMaterials")) {
             $marker->materials()->detach();
-
+            $marker->save();
             $materials = json_decode($input['recyclableMaterials']);
 
             foreach ($materials as $materialInput) {
