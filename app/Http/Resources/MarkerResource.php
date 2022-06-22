@@ -47,11 +47,13 @@ class MarkerResource extends JsonResource
             $distance = (((acos(sin(($coords[0] * pi() / 180)) * sin(($this->latitude * pi() / 180)) + cos(($coords[0] * pi() / 180)) * cos(($this->latitude * pi() / 180)) * cos((($coords[1] - $this->longitude) * pi() / 180)))) * 180 / pi()) * 60 * 1.1515 * 1.609344);
         }
 
+        $statuses = $this->status()->get();
+
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
             'title' => $this->title,
-            'status' => $this->status()->get(),
+            'status' => sizeof($statuses) > 0 ? new StatusResource($statuses) : [],
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'likes' => $this->likes,
