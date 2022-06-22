@@ -10,6 +10,7 @@ use Validator;
 use Firebase\Auth\Token\Exception\InvalidToken;
 use Log;
 use Carbon\Carbon;
+use App\Http\Resources\PermissionResource;
 
 
 class RegisterController extends BaseController
@@ -98,7 +99,7 @@ class RegisterController extends BaseController
         // You may format this object to suit your needs
         return response()->json([
             'id' => $user->id,
-            'permissions' => $user->permission()->get(),
+            'permissions' => PermissionResource::collection($user->permission()->get()),
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(
