@@ -281,14 +281,15 @@ class MarkerController extends BaseController
 
         if ($request->has("recyclableMaterials")) {
             $marker->materials()->sync([]);
-            $marker->save();
             $materials = json_decode($input['recyclableMaterials']);
 
             foreach ($materials as $materialInput) {
                 $material = Material::where("code", $materialInput->code)->first();
                 Log::info("Material: ");
                 Log::info($material);
-                $marker->materials()->syncWithoutDetaching($material);
+                if ($materialInput->value) {
+                    $marker->materials()->syncWithoutDetaching($material);
+                }
             }
         }
 
