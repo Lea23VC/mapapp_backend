@@ -287,6 +287,8 @@ class MarkerController extends BaseController
                 $material = Material::where("code", $materialInput->code)->first();
                 Log::info("Material: ");
                 Log::info($material);
+                Log::info("Material input: ");
+                Log::info($materialInput);
                 if ($materialInput->value) {
                     $marker->materials()->syncWithoutDetaching($material);
                 }
