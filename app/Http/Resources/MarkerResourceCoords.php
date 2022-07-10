@@ -36,6 +36,7 @@ class MarkerResourceCoords extends JsonResource
             'title' => $this->title,
             'address' => $this->address_street . " " . $this->address_number . ", " . $this->commune . ", " . $this->city . ", " . $this->state . ", " . $this->country,
             'imgURL' => $image,
+            'availability' => $this->availability
         ];
     }
 }
