@@ -35,7 +35,7 @@ class UserController extends BaseController
         $items_per_page = $request->input("items_per_page");
 
 
-        return UserResource::collection(User::filter($request->all())->paginate($items_per_page));
+        return UserResource::collection(User::filter($request->all())->paginate(10))->sortBy('likes');
     }
 
     /**
