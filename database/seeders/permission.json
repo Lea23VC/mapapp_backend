@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Cambiar estado",
+    "code": "change_state"
+  },
+  {
+    "name": "Agregar mensaje",
+    "code": "add_message"
+  },
+  {
+    "name": "Deshabilitar punto",
+    "code": "disable_marker"
+  },
+  {
+    "name": "Editar marcador",
+    "code": "edit_marker"
+  },
+  {
+    "name": "Editar marcador",
+    "code": "edit_marker"
+  }
+
+]

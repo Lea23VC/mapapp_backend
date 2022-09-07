@@ -6,11 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
+use EloquentFilter\Filterable;
+use App\ModelFilters\UserFilter;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Filterable;
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +20,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'username',
         'name',
         'email',
         'password',
+        "firebaseUID",
+        "birthDate",
+        'profilePic'
     ];
 
     /**
@@ -44,5 +50,29 @@ class User extends Authenticatable
     public function marker()
     {
         return $this->hasMany(Marker::class);
+    }
+    public function permission()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function modelFilter(): ?string
+    {
+        return $this->provideFilter(UserFilter::class);
+    }
+
+    public function votedMarkers()
+    {
+        return $this->BelongsToMany(Marker::class)->withPivot('voted');
+    }
+
+    public function votedComments()
+    {
+        return $this->BelongsToMany(Comment::class)->withPivot('voted');
     }
 }

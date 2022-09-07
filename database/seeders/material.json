@@ -1,0 +1,54 @@
+[
+  {
+    "name": "PE",
+    "code": "PE"
+  },
+  {
+    "name": "PET",
+    "code": "PET"
+  },
+  {
+    "name": "PVC",
+    "code": "PVC"
+  },
+  {
+    "name": "Aluminio",
+    "code": "aluminium"
+  },
+  {
+    "name": "Pilas y Baterías",
+    "code": "batteries"
+  },
+  {
+    "name": "Cartón",
+    "code": "cardboard"
+  },
+  {
+    "name": "Teléfonos y celulares",
+    "code": "cellphones"
+  },
+  {
+    "name": "Vidrio",
+    "code": "glass"
+  },
+  {
+    "name": "Aceites",
+    "code": "oil"
+  },
+  {
+    "name": "Otros papeles",
+    "code": "otherPapers"
+  },
+  {
+    "name": "Otros plásticos",
+    "code": "otherPlastics"
+  },
+  {
+    "name": "Papel",
+    "code": "paper"
+  },
+  {
+    "name": "Cajas Tetra",
+    "code": "tetra"
+  }
+]

@@ -3,8 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Artisan;
 
-class CreateAddressesTable extends Migration
+class CreateStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +14,20 @@ class CreateAddressesTable extends Migration
      */
     public function up()
     {
-        Schema::create('addresses', function (Blueprint $table) {
+        Schema::create('statuses', function (Blueprint $table) {
             $table->id();
+            $table->string("name");
+            $table->string("code");
             $table->timestamps();
-            $table->string("address_number");
-            $table->string("address_street");
-            $table->string("commune");
-            $table->string("city");
-            $table->string("state");
-            $table->string("country");
         });
+
+        Artisan::call(
+            'db:seed',
+            [
+                '--class' => 'StatusSeeder',
+                '--force' => true
+            ]
+        );
     }
 
     /**
@@ -32,6 +37,6 @@ class CreateAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('addresses');
+        Schema::dropIfExists('status');
     }
 }

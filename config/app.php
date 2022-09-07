@@ -2,6 +2,7 @@
 
 return [
 
+    'isLocal' => env('IS_LOCAL', false),
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -133,7 +134,6 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
-
     'providers' => [
 
         Laravel\Passport\PassportServiceProvider::class,
@@ -176,6 +176,18 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
+
+
+        Geocoder\Laravel\Providers\GeocoderService::class,
+
+        Kreait\Laravel\Firebase\ServiceProvider::class,
+
+
+        Intervention\Image\ImageServiceProvider::class,
+
+
+        EloquentFilter\ServiceProvider::class,
 
     ],
 
@@ -231,6 +243,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 
