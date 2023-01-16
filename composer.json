@@ -6,6 +6,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "bref/bref": "^1.7",
+        "bref/laravel-bridge": "^1.2",
         "doctrine/dbal": "^3.3",
         "firebase/php-jwt": "^6.1",
         "fruitcake/laravel-cors": "^2.0",
