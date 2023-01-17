@@ -18,4 +18,12 @@ class Material extends Model
     {
         return $this->belongsToMany(Marker::class);
     }
+
+
+    #graphql
+
+    public function markers()
+    {
+        return $this->belongsToMany(Marker::class);
+    }
 }

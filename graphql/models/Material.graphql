@@ -1,0 +1,32 @@
+"Materials."
+type Material {
+    "Unique primary key."
+    id: ID!
+
+    "Name of the material"
+    name: String
+
+    "Code of the material"
+    code: String
+
+    "markers that contains this material"
+    markers: [Marker] @belongsToMany
+
+    "When the material was created."
+    created_at: DateTime!
+
+    "When the material was last updated."
+    updated_at: DateTime!
+}
+
+extend type Query {
+    "Find a single material by an identifying attribute."
+    material(
+        "Search by primary key."
+        id: ID @eq
+
+        code: String @eq
+    ): Material @find
+    "List multiple materials."
+    materials: [Material!]! @paginate(defaultCount: 10)
+}

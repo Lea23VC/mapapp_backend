@@ -39,6 +39,9 @@ type Marker {
     "User who created the marker"
     user: User! @belongsTo
 
+    "materials that receive this marker"
+    materials: [Material] @belongsToMany
+
     "When the account was created."
     created_at: DateTime!
 }
