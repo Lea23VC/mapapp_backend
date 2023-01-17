@@ -1,0 +1,51 @@
+type CommentUserPivot {
+    voted: Int
+}
+
+type VotedPivot implements UserData {
+    id: ID!
+
+    "Non-unique name."
+    name: String!
+
+    "Unique email address."
+    email: String!
+
+    firebaseUID: String!
+
+    pivot: CommentUserPivot
+}
+
+"Markers from map."
+type Comment {
+    "Unique primary key."
+    id: ID!
+
+    "Message that contains the comment."
+    message: String!
+
+    "number of likes of the comment"
+    likes: Int
+
+    "number of dislikes of the comment"
+    dislikes: Int
+
+    "user that made the comment"
+    user: User! @belongsTo
+
+    "users that liked or disliked the comment"
+    usersWhoVoted: [VotedPivot!] @belongsToMany
+
+    "marker that has this comment"
+    marker: Marker! @belongsTo
+}
+
+extend type Query {
+    "Find a single user by an identifying attribute."
+    comment("Search by primary key." id: ID @eq): Comment @find
+    "List multiple markers."
+    comments(
+        "Filters by title. Accepts SQL LIKE wildcards `%` and `_`."
+        message: String @where(operator: "like")
+    ): [Comment!]! @paginate(defaultCount: 10)
+}

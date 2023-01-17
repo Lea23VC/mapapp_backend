@@ -10,6 +10,9 @@ use Laravel\Passport\HasApiTokens;
 use EloquentFilter\Filterable;
 use App\ModelFilters\UserFilter;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Filterable;
@@ -47,7 +50,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function marker()
+    public function marker(): HasMany
     {
         return $this->hasMany(Marker::class);
     }
@@ -74,5 +77,13 @@ class User extends Authenticatable
     public function votedComments()
     {
         return $this->BelongsToMany(Comment::class)->withPivot('voted');
+    }
+
+
+    #for graphql
+
+    public function markers(): HasMany
+    {
+        return $this->hasMany(Marker::class);
     }
 }
