@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
 use App\ModelFilters\MarkerFilter;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Marker extends Model
 {
@@ -49,7 +51,7 @@ class Marker extends Model
     //     return $this->hasOne(RecyclableMaterial::class, "marker_user");
     // }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

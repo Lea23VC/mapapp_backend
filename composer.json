@@ -6,6 +6,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "bref/bref": "^1.7",
+        "bref/laravel-bridge": "^1.2",
         "doctrine/dbal": "^3.3",
         "firebase/php-jwt": "^6.1",
         "fruitcake/laravel-cors": "^2.0",
@@ -20,6 +22,8 @@
         "laravel/sanctum": "^2.11",
         "laravel/telescope": "^4.8",
         "laravel/tinker": "^2.5",
+        "mll-lab/laravel-graphiql": "^1.0",
+        "nuwave/lighthouse": "^5.70",
         "toin0u/geocoder-laravel": "^4.4",
         "tucker-eric/eloquentfilter": "^3.1"
     },

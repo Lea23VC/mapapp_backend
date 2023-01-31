@@ -1,0 +1,63 @@
+"Markers from map."
+type Marker {
+    "Unique primary key."
+    id: ID!
+
+    "Non-unique title."
+    title: String
+
+    "IMG url."
+    imgURL: String
+
+    "When the email was verified."
+    status: Boolean
+
+    availability: Boolean
+
+    likes: Int
+
+    dislikes: Int
+
+    latitude: Float
+
+    longitude: Float
+
+    user_id: Int
+
+    address_number: String
+
+    commnune: String
+
+    city: String
+
+    state: String
+
+    country: String
+
+    status_id: Int
+
+    "User who created the marker"
+    user: User! @belongsTo
+
+    "materials that receive this marker"
+    materials: [Material] @belongsToMany
+
+    "When the account was created."
+    created_at: DateTime!
+}
+
+extend type Query {
+    "Find a single user by an identifying attribute."
+    marker(
+        "Search by primary key."
+        id: ID @eq
+
+        "Search by title address."
+        titulo: String @eq
+    ): Marker @find
+    "List multiple markers."
+    markers(
+        "Filters by title. Accepts SQL LIKE wildcards `%` and `_`."
+        title: String @where(operator: "like")
+    ): [Marker!]! @paginate(defaultCount: 10)
+}
